@@ -1,0 +1,74 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended"
+    ],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            },
+            "babel-module": {}
+        },
+        "import/extensions": [".js", ".jsx", ".json, .ts, .tsx"]
+    },
+    "plugins": ["react", "module-resolver", "import"],
+    "rules": {
+        "no-unused-vars": "warn",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": 0,
+        "react/prop-types": 0,
+        //Module Import Rules (Absolute)
+        "module-resolver/use-alias": 0,
+        // Import Rules
+        "import/default": "error",
+        "import/export": "error",
+        "import/order": [
+            "error",
+            {
+                "groups": ["builtin", "external", "parent", "sibling", "index"],
+                "alphabetize": {
+                    "order": "asc"
+                },
+                "pathGroups": [
+                    {
+                        "pattern": "react-native",
+                        "group": "builtin",
+                        "position": "before"
+                    },
+                    {
+                        "pattern": "react",
+                        "group": "builtin",
+                        "position": "before"
+                    },
+                    {
+                        "pattern": "assets/*",
+                        "group": "parent",
+                        "position": "after"
+                    },
+                    {
+                        "pattern": "src/*",
+                        "group": "parent",
+                        "position": "after"
+                    }
+                ],
+                "pathGroupsExcludedImportTypes": ["react-native", "react"]
+            }
+        ]
+    }
+}

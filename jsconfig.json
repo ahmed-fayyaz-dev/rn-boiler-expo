@@ -1,0 +1,11 @@
+// Config For Autocomplete of Absolute Imports
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src": ["./src/*"],
+      "assets": ["./assets/*"],
+      "appConstants": ["./appConstants"]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+    "cli": {
+        "version": ">= 0.37.0"
+    },
+    "build": {
+        "development": {
+            "developmentClient": true,
+            "distribution": "internal",
+            "releaseChannel": "default",
+            "android": {
+                "buildType": "apk"
+            }
+        },
+        "production": {
+            "extends": "base",
+            "distribution": "store",
+            "releaseChannel": "stable",
+            "android": {
+                "buildType": "app-bundle"
+            }
+        },
+        "local": {
+            "android": {
+                "buildType": "apk"
+            }
+        },
+        "assemble": {
+            "android": {
+                "gradleCommand": ":app:assembleRelease"
+            }
+        }
+    },
+    "submit": {
+        "production": {}
+    }
+}

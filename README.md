@@ -22,7 +22,8 @@
  
 ** NOTE : don't forget to add your secret vars in ".env"
 
-Steps to run.
+<h3>Steps to run.</h3>
+ 
  1 - yarn / npm i --save
  2 - add secret vars suchas serverUrl to your ".env" (optional)
  3 - yarn start / npm start

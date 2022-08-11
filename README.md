@@ -20,3 +20,4 @@
  - Expo Application Services Ready project (after you initializes EAS)
  - Added Many Custom Components "Custom Text/ Custom Buttons / Fabs ..."
  
+** NOTE : don't forget to add your secret vars in ".env"

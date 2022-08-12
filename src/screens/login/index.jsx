@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 
 import { bindActionCreators } from "redux";
 import { icons } from "assets/images";
+import { IonIcons, setStorageItem } from "src/helpers";
 import { submitLoginAccount } from "./actions/actions";
 import { Form } from "./components/form";
 import { CustomCaption, CustomSubheading } from "src/components/customText";
 import { GapV } from "src/components/gap";
-import { IonIcons, setStorageItem } from "src/helpers";
 import { entering, exiting } from "src/helpers/animation";
 import { callApi } from "src/helpers/apiCall";
 import { ONBOARD, ID, PASSWORD } from "src/helpers/constants";
@@ -36,14 +36,16 @@ function Login({ navigation, submitLoginAccount }) {
             setStorageItem(ONBOARD, true);
         }
 
-        await callApi({
-            data,
-            setLoading: () => {},
-            submitCallApi: submitLoginAccount,
-            successFunc: navigate,
-            errFunc: () => {},
-            catchFunc: () => {},
-        });
+        // await callApi({
+        //     data,
+        //     setLoading: () => {},
+        //     submitCallApi: submitLoginAccount,
+        //     successFunc: navigate,
+        //     errFunc: () => {},
+        //     catchFunc: () => {},
+        // });
+
+        navigate();
     }
 
     const TopView = () => (

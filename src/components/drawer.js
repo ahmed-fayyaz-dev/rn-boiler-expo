@@ -7,17 +7,7 @@ import { useTheme as paperTheme, TouchableRipple } from "react-native-paper";
 import Animated, { FadeInLeft } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import {
-    CustomCaption,
-    CustomParagraph,
-    CustomSubheading,
-    CustomText,
-} from "./customText";
-import { GapH } from "./gap";
-import { icons } from "assets/images/index";
-import { CustomIconButton } from "src/components/buttons";
 import { IonIcons, removeStorageItem } from "src/helpers";
-import { ID, PASSWORD, ONBOARD } from "src/helpers/constants";
 import {
     bRss,
     mgM,
@@ -28,6 +18,16 @@ import {
     pdHs,
     pdVss,
 } from "src/styles";
+import {
+    CustomCaption,
+    CustomParagraph,
+    CustomSubheading,
+    CustomText,
+} from "./customText";
+import { GapH } from "./gap";
+import { icons } from "assets/images/index";
+import { CustomIconButton } from "src/components/buttons";
+import { ID, PASSWORD, ONBOARD } from "src/helpers/constants";
 import { iconSize } from "src/styles/navCss";
 
 const MenuLabels = [

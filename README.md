@@ -1,6 +1,6 @@
 # rn-boiler-expo sdk 
 
-<h1>React Native BoilerPlate  With Expo 44 (React Native 0.64.3). Updated to sdk 46 rn 0.69 on a seperate branch</h1>
+<h1>React Native BoilerPlate  With Expo 44 (React Native 0.64.3).</h1>
 
  <h2>Features and Libraries</h2>
 

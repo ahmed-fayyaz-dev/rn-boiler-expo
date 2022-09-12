@@ -1,3 +1,0 @@
-//Dashboard Boxes
-
-export const GET_DASHBOARD_DATA_ALL_SUCCESS = "GET_DASHBOARD_DATA_ALL_SUCCESS";

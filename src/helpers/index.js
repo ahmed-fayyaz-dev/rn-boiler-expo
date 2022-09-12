@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDrawerStatus } from "@react-navigation/drawer";
 import * as Device from "expo-device";
+import { ID, PASSWORD, ONBOARD } from "./constants";
 
 export const windowWidth = Dimensions.get("window").width;
 
@@ -96,3 +97,14 @@ export function validatePassword(val) {
         /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()+=-?;,./{}|":<>[\]\\' ~_]).{8,}/;
     return re.test(val);
 }
+
+export const signOutFunc = ({ logout, navigation }) => {
+    removeStorageItem(ID);
+    removeStorageItem(ONBOARD);
+    removeStorageItem(PASSWORD);
+    logout();
+    navigation.reset({
+        index: 0,
+        routes: [{ name: "authStack" }],
+    });
+};

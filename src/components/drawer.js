@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Image, View, StyleSheet } from "react-native";
 import { DrawerItem, DrawerContentScrollView } from "@react-navigation/drawer";
 import { useTheme } from "@react-navigation/native";
 import { nativeApplicationVersion } from "expo-application";
-import { useTheme as paperTheme, TouchableRipple } from "react-native-paper";
-import Animated, { FadeInLeft } from "react-native-reanimated";
+import { useTheme as paperTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { IonIcons, removeStorageItem } from "src/helpers";
+import { IonIcons, signOutFunc } from "src/helpers";
 import {
     bRss,
     mgM,
@@ -27,150 +26,57 @@ import {
 import { GapH } from "./gap";
 import { icons } from "assets/images/index";
 import { CustomIconButton } from "src/components/buttons";
-import { ID, PASSWORD, ONBOARD } from "src/helpers/constants";
 import { iconSize } from "src/styles/navCss";
 
-const MenuLabels = [
-    {
-        label: "Dashboard",
-        level: 0,
-        icon: icons.drawer.report,
-    },
-    {
-        label: "Accounts",
-        level: 1,
-        icon: icons.drawer.topSale,
-    },
-    {
-        label: "Inventory",
-        level: 2,
-        icon: icons.drawer.topSale,
-    },
-];
-
-const DrawerIcons = ({ icon }) => (
-    <Image
-        source={icon}
-        style={[{ height: iconSizeContent, width: iconSizeContent }]}
-    />
-);
+// const MenuLabels = [];
 
 const navigateTo = ({ navigation, name }) => {
     navigation.closeDrawer();
     setTimeout(() => navigation.navigate(name), 800);
 };
 
-const signOutFunc = ({ logout, navigation }) => {
-    removeStorageItem(ID);
-    removeStorageItem(ONBOARD);
-    removeStorageItem(PASSWORD);
-    logout();
-    navigation.reset({
-        index: 0,
-        routes: [{ name: "authStack" }],
-    });
-};
-
-const BackIcon = ({ colors, navigation }) => (
+const BackIcon = ({ navigation }) => (
     <CustomIconButton
         size={iconSize}
-        color={colors.primary}
-        name={"chevron-back-outline"}
+        color={onBackgroundDark}
+        name={"close-circle-outline"}
         onPress={() => navigation.toggleDrawer()}
     />
 );
 
-const DrawerAccountInfo = ({ colors, loginUserReducer }) => {
-    const { user_pp, users } = loginUserReducer;
-
-    const style = styles(colors);
-    return (
-        <View style={[style.accountInfo]}>
-            <Image
-                source={{
-                    // uri: user_pp,
-                    uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwKS__3aeYLOiN8j1Le-GtHt2zI33vYTNQysiewAEC_w&s",
-                }}
-                resizeMode="cover"
-                style={[style.roundImage]}
-            />
-            <GapH small={true} />
-
-            <View>
-                <CustomText style={style.textLeft}>
-                    {users?.employeeName}
-                </CustomText>
-                <CustomCaption style={style.textLeft}>
-                    {users?.empCode}
-                </CustomCaption>
-            </View>
-        </View>
-    );
-};
-
-const CustomDrawerList = ({ state, descriptors, navigation, levelToShow }) => {
+const CustomDrawerList = ({
+    state,
+    descriptors,
+    navigation,
+    // levelToShow
+}) => {
     return state.routes.map((route) => {
         const {
-            level,
+            // level,
             title,
-            // drawerIcon,
+            drawerIcon,
             drawerItemStyle,
             drawerActiveTintColor,
             drawerActiveBackgroundColor,
         } = descriptors[route.key].options;
 
-        if (levelToShow === level)
-            return (
-                <DrawerItem
-                    key={route.key}
-                    // icon={drawerIcon}
-                    style={drawerItemStyle}
-                    label={title || route.name}
-                    activeTintColor={drawerActiveTintColor}
-                    activeBackgroundColor={drawerActiveBackgroundColor}
-                    onPress={() => navigateTo({ navigation, name: route.name })}
-                    focused={
-                        state.routes.findIndex((e) => e.name === route.name) ===
-                        state.index
-                    }
-                />
-            );
+        // if (levelToShow === level)
+        return (
+            <DrawerItem
+                key={route.key}
+                icon={drawerIcon}
+                style={drawerItemStyle}
+                label={title || route.name}
+                activeTintColor={drawerActiveTintColor}
+                activeBackgroundColor={drawerActiveBackgroundColor}
+                onPress={() => navigateTo({ navigation, name: route.name })}
+                focused={
+                    state.routes.findIndex((e) => e.name === route.name) ===
+                    state.index
+                }
+            />
+        );
     });
-};
-
-const MenuItem = ({ menuItem, state, descriptors, navigation }) => {
-    const { label, level, icon } = menuItem;
-    const { colors: paperColors } = paperTheme();
-    const style = styles(paperColors);
-
-    const [show, setShow] = useState(false);
-    const toggleMenu = () => setShow(!show);
-
-    return (
-        <>
-            <TouchableRipple onPress={toggleMenu} style={style.menuItem}>
-                <>
-                    <DrawerIcons icon={icon} />
-                    <CustomParagraph>{label}</CustomParagraph>
-                    <CustomIconButton
-                        styleP={style.menuItemIcon}
-                        name={show ? "chevron-up" : "chevron-down"}
-                    />
-                </>
-            </TouchableRipple>
-
-            {show && (
-                <Animated.View style={style.menuItemList} entering={FadeInLeft}>
-                    {CustomDrawerList({
-                        state,
-                        descriptors,
-                        navigation,
-                        levelToShow: level,
-                    })}
-                </Animated.View>
-            )}
-        </>
-    );
 };
 
 function DrawerContent(props) {
@@ -178,13 +84,10 @@ function DrawerContent(props) {
     const { colors: paperColors } = paperTheme();
     const style = styles(paperColors);
     const { state, descriptors, navigation } = props;
-    const { loginUserReducer, logout, drawerItemStyle } = props;
+    const { logout, drawerItemStyle } = props;
 
     const Header = () => (
-        <View style={[style.drawerTopView]}>
-            {BackIcon({ colors, navigation })}
-            {DrawerAccountInfo({ colors, loginUserReducer })}
-        </View>
+        <View style={[style.drawerTopView]}>{BackIcon({ navigation })}</View>
     );
 
     const Footer = () => (
@@ -200,12 +103,15 @@ function DrawerContent(props) {
         </View>
     );
 
-    const DrawerContent = () => (
-        <DrawerContentScrollView {...props}>
+    const DrawerScroll = () => (
+        <DrawerContentScrollView
+            contentContainerStyle={style.drawerContentScroll}
+            {...props}
+        >
             <CustomSubheading style={[style.menuText]}>MENU</CustomSubheading>
 
-            {/* Drawer Screens List */}
-            {MenuLabels.map((menuItem, i) => (
+            {/* Drawer with Sub Levels */}
+            {/* {MenuLabels.map((menuItem, i) => (
                 <MenuItem
                     key={i}
                     state={state}
@@ -213,8 +119,14 @@ function DrawerContent(props) {
                     descriptors={descriptors}
                     navigation={navigation}
                 />
-            ))}
+            ))} */}
 
+            {/* Drawer Without having levels */}
+            <CustomDrawerList
+                state={state}
+                descriptors={descriptors}
+                navigation={navigation}
+            />
             {/* Drawer Signout item */}
             <DrawerItem
                 onPress={() => signOutFunc({ logout, navigation })}
@@ -230,7 +142,7 @@ function DrawerContent(props) {
     return (
         <SafeAreaView style={style.container}>
             {Header()}
-            {DrawerContent()}
+            {DrawerScroll()}
             {Footer()}
         </SafeAreaView>
     );
@@ -244,13 +156,9 @@ const styles = (colors) =>
 
         menuText: {
             margin: mgS,
-            marginBottom: mgM,
             padding: mgS,
             textAlign: "left",
             fontWeight: "bold",
-            borderRadius: bRss,
-            color: onBackgroundDark,
-            backgroundColor: colors.notification,
         },
 
         textLeft: { textAlign: "left" },
@@ -264,7 +172,10 @@ const styles = (colors) =>
 
         drawerTopView: {
             flexDirection: "row-reverse",
+            backgroundColor: colors.notification,
         },
+
+        drawerContentScroll: { paddingTop: 0 },
 
         roundImage: {
             width: 65,
@@ -306,3 +217,73 @@ const styles = (colors) =>
 
         logoImage: { maxWidth: 80, maxHeight: 80 },
     });
+
+// const DrawerIcons = ({ icon }) => (
+//     <Image
+//         source={icon}
+//         style={[{ height: iconSizeContent, width: iconSizeContent }]}
+//     />
+// );
+
+// const DrawerAccountInfo = ({ colors, loginUserReducer }) => {
+//     const { user_pp, users } = loginUserReducer;
+
+//     const style = styles(colors);
+//     return (
+//         <View style={[style.accountInfo]}>
+//             <Image
+//                 source={{
+//                     // uri: user_pp,
+//                     uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwKS__3aeYLOiN8j1Le-GtHt2zI33vYTNQysiewAEC_w&s",
+//                 }}
+//                 resizeMode="cover"
+//                 style={[style.roundImage]}
+//             />
+//             <GapH small={true} />
+
+//             <View>
+//                 <CustomText style={style.textLeft}>
+//                     {users?.employeeName}
+//                 </CustomText>
+//                 <CustomCaption style={style.textLeft}>
+//                     {users?.empCode}
+//                 </CustomCaption>
+//             </View>
+//         </View>
+//     );
+// };
+
+// const MenuItem = ({ menuItem, state, descriptors, navigation }) => {
+//     const { label, level, icon } = menuItem;
+//     const { colors: paperColors } = paperTheme();
+//     const style = styles(paperColors);
+
+//     const [show, setShow] = useState(false);
+//     const toggleMenu = () => setShow(!show);
+
+//     return (
+//         <>
+//             <TouchableRipple onPress={toggleMenu} style={style.menuItem}>
+//                 <>
+//                     <DrawerIcons icon={icon} />
+//                     <CustomParagraph>{label}</CustomParagraph>
+//                     <CustomIconButton
+//                         styleP={style.menuItemIcon}
+//                         name={show ? "chevron-up" : "chevron-down"}
+//                     />
+//                 </>
+//             </TouchableRipple>
+
+//             {show && (
+//                 <Animated.View style={style.menuItemList} entering={FadeInLeft}>
+//                     {CustomDrawerList({
+//                         state,
+//                         descriptors,
+//                         navigation,
+//                         levelToShow: level,
+//                     })}
+//                 </Animated.View>
+//             )}
+//         </>
+//     );
+// };

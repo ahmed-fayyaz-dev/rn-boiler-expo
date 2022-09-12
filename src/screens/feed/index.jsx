@@ -3,18 +3,18 @@ import { View, StyleSheet } from "react-native";
 import { useTheme } from "react-native-paper";
 import { connect } from "react-redux";
 
-import { submitGetDashboardData } from "./actions/actions";
+import { submitGetFeedData } from "./actions/actions";
 import { CustomSnackbar } from "src/components/customSnackbar";
 import { GapV } from "src/components/gap";
 import VirtualizedView from "src/components/virtualizedBackedContainer";
 import { callApi } from "src/helpers/apiCall";
 import gloabalStyle, { mgMs, mgVm, zIndexM } from "src/styles/index";
 
-function Dashboard({
+function Feed({
     // loginUserReducer,
-    submitGetDashboardData,
+    submitGetFeedData,
     //
-    dashboardDataReducer,
+    feedDataReducer,
 }) {
     const { colors } = useTheme();
     const gStyle = gloabalStyle();
@@ -33,8 +33,8 @@ function Dashboard({
         callApi({
             data: {},
             setLoading: setLoading,
-            callApiReducer: dashboardDataReducer,
-            submitCallApi: submitGetDashboardData,
+            callApiReducer: feedDataReducer,
+            submitCallApi: submitGetFeedData,
             successFunc: () => {},
             errFunc: () => {},
             catchFunc: () => {},
@@ -43,8 +43,6 @@ function Dashboard({
 
     return (
         <View style={[gStyle.container]}>
-            <View style={style.dashboardHeader}></View>
-
             <VirtualizedView
                 refresh={true}
                 refreshing={refreshing}
@@ -73,24 +71,17 @@ function Dashboard({
     );
 }
 
-function mapStateToProps({ loginUserReducer, dashboardDataReducer }) {
+function mapStateToProps({ loginUserReducer, feedDataReducer }) {
     return {
         loginUserReducer,
-        dashboardDataReducer,
+        feedDataReducer,
     };
 }
 
-export default connect(mapStateToProps, { submitGetDashboardData })(Dashboard);
+export default connect(mapStateToProps, { submitGetFeedData })(Feed);
 
 const styles = (colors) =>
     StyleSheet.create({
-        dashboardHeader: {
-            minHeight: 80,
-            backgroundColor: colors.notification,
-            paddingHorizontal: mgMs,
-            zIndex: zIndexM,
-        },
-
         content: {
             flex: 1,
             marginTop: mgVm,

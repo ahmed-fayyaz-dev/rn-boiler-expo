@@ -12,6 +12,7 @@ export async function callApi({
     NetInfo.fetch().then(async (state) => {
         if (state.isConnected != false) {
             setLoading(true);
+
             submitCallApi(data)
                 .then((res) => {
                     if (res?.status == "success") {

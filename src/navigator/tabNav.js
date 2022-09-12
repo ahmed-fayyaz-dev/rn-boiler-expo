@@ -6,11 +6,6 @@
 // import { BottomBarIcons } from "../constants";
 // import TabBar from "../components/customBottomTab";
 
-// // import StoresStack from "./navSlices/storesStack";
-// // import RestaurantsStack from "./navSlices/restaurantsStack";
-// // import FavouritesStack from "./navSlices/favouritesStack";
-// // import CouponsStack from "./navSlices/couponsStack";
-
 // const BottomTab = createBottomTabNavigator();
 
 // const TabNavigator = () => {
@@ -39,27 +34,7 @@
 //         name="storesStack"
 //         component={StoresStack}
 //       />
-//       <BottomTab.Screen
-//         options={{
-//           tabBarLabel: "Favourites",
-//         }}
-//         name="favouritesStack"
-//         component={FavouritesStack}
-//       />
-//       <BottomTab.Screen
-//         options={{
-//           tabBarLabel: "Restaurants",
-//         }}
-//         name="RestaurantsStack"
-//         component={RestaurantsStack}
-//       />
-//       <BottomTab.Screen
-//         options={{
-//           tabBarLabel: "Coupons",
-//         }}
-//         name="couponsStack"
-//         component={CouponsStack}
-//       /> */}
+//        */}
 //     </BottomTab.Navigator>
 //   );
 // };

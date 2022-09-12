@@ -1,4 +1,4 @@
-import * as types from "src/screens/dashboard/constants/constants";
+import * as types from "src/screens/feed/constants/constants";
 
 let initial = {
     loading: false,
@@ -7,7 +7,7 @@ let initial = {
 };
 export default function (state = initial, action) {
     switch (action.type) {
-        case types.GET_DASHBOARD_DATA_ALL_SUCCESS:
+        case types.GET_FEED_SUCCESS:
             return {
                 ...state,
                 loading: false,

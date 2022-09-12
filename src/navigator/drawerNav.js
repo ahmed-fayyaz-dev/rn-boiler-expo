@@ -1,24 +1,20 @@
 import React from "react";
 import { Dimensions, Image, StyleSheet, View } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { format } from "date-fns";
 import { useTheme } from "react-native-paper";
 import { connect } from "react-redux";
 
 import { icons } from "assets/images";
-import { CustomCaption } from "src/components/customText";
 import DrawerContent from "src/components/drawer";
-import { IonIcons } from "src/helpers";
 import { logout } from "src/redux/common/actions/actions";
 
-import Dashboard from "src/screens/dashboard";
+import Feed from "src/screens/feed";
 import { Playground } from "src/screens/playground";
 import { drawerActiveTint, drawerIcon } from "src/styles/navCss";
 
 const levels = {
-    dashboardLevel: 0,
-    accountsLevel: 1,
-    inventoryLevel: 2,
+    subLevel1: 0,
+    subLevel2: 1,
 };
 
 const Drawer = createDrawerNavigator();
@@ -30,22 +26,9 @@ const DrawerIcons = ({ size, focused, icon }) => (
     />
 );
 
-const headerRight = ({ style }) => (
-    <View>
-        <CustomCaption style={style.time}>
-            {format(new Date(), "EEEE, MMMM")}
-        </CustomCaption>
-        <CustomCaption style={style.time}>
-            {format(new Date(), "d, yyy")}
-        </CustomCaption>
-    </View>
-);
-
 const DrawerNav = (props) => {
     const { colors } = useTheme();
     const style = styles(colors);
-
-    const dashboardHeaderRight = () => headerRight({ style: style });
 
     return (
         <Drawer.Navigator
@@ -58,9 +41,8 @@ const DrawerNav = (props) => {
                 headerStyle: style.headerStyle,
                 headerTintColor: drawerActiveTint,
                 drawerStyle: style.drawer,
-                drawerItemStyle: style.drawerItem,
-                drawerIcon: ({ color, size }) =>
-                    IonIcons({ name: drawerIcon, size: size, color: color }),
+                // drawerIcon: ({ color, size }) =>
+                //     IonIcons({ name: drawerIcon, size: size, color: color }),
             }}
             drawerContent={(dCprops) => (
                 <DrawerContent
@@ -72,13 +54,11 @@ const DrawerNav = (props) => {
             )}
         >
             <Drawer.Screen
-                name="dashboard"
-                component={Dashboard}
+                name="feed"
+                component={Feed}
                 options={{
-                    level: levels.dashboardLevel,
-                    title: "- Dashboard",
-                    headerTitleContainerStyle: { height: 0, width: 0 },
-                    // headerRight: dashboardHeaderRight,
+                    title: "Feed",
+                    // drawerIcon:({focused,size})=>DrawerIcons({focused,size,icon:})
                 }}
             />
             <Drawer.Screen name="playground" component={Playground} />
@@ -98,8 +78,6 @@ export default connect(mapStateToProps, {
 
 const styles = (colors) =>
     StyleSheet.create({
-        drawerItem: {},
-
         drawer: {
             width: 0.8 * Dimensions.get("window").width,
         },

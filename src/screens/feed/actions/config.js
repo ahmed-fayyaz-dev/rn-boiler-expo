@@ -1,7 +1,7 @@
 import { SERVER_URL } from "src/appConstants";
 import { deviceInfo, versionCode } from "src/helpers";
 
-export const getDashboardDataConfig = (data, type, getState) => {
+export const getFeedDataConfig = (data, type, getState) => {
     const companyId = getState().companyIdReducer.data;
     const quarter = getState().quarterReducer.data;
     const fyear = getState().fYearReducer.data;

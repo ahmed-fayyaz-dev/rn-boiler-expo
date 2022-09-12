@@ -24,7 +24,7 @@ export function submitLoginAccount(data) {
         };
 
         return axios(config)
-            .then(async function (response) {
+            .then((response) => {
                 dispatch({
                     type: types.LOGIN_ACCOUNT_SUCCESS,
                     payload: response.data,
@@ -32,7 +32,7 @@ export function submitLoginAccount(data) {
                 // console.log(response.data);
                 return response.data;
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.error("error///", error); // Console Log
                 Alert.alert("Error! Logging in was unsucessfull", `${error}`);
                 dispatch({ type: types.LOGIN_ACCOUNT_FAIL, payload: error });

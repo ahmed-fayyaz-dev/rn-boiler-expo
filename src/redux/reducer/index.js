@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import commonReducers from "src/redux/common/reducers";
-import dashboardReducers from "src/screens/dashboard/reducers";
+import feedReducers from "src/screens/feed/reducers";
 import loginReducers from "src/screens/login/reducers";
 
 const rootReducer = (state, action) => {
@@ -14,7 +14,7 @@ const rootReducer = (state, action) => {
 const appReducer = combineReducers({
     ...loginReducers,
     ...commonReducers,
-    ...dashboardReducers,
+    ...feedReducers,
 });
 
 export default rootReducer;
